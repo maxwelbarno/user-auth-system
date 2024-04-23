@@ -1,9 +1,9 @@
-from flask import Flask, request, render_template, url_for
+from flask import Flask, request, render_template, url_for, session
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 
 app = Flask(__name__)
-
+app.secret_key = "sweetsecret"
 app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "admin"
 app.config["MYSQL_PASSWORD"] = "admin123"
@@ -42,3 +42,30 @@ def register():
             mysql.connection.commit()
             message = "user successfully registered!"
     return render_template("register.html", message=message)
+
+
+@app.route("/login", methods=["POST", "GET"])
+def login():
+    message = ""
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute(
+            "SELECT * FROM accounts WHERE username=%s AND password=%s",
+            (
+                username,
+                password,
+            ),
+        )
+
+        account = cursor.fetchone()
+        if account:
+            session["loggedin"] = True
+            session["id"] = account["id"]
+            session["username"] = account["username"]
+            message = "User logged in successfully!"
+            return render_template("index.html", message=message)
+        else:
+            message = "Incorrect username or password"
+    return render_template("login.html", message=message)
