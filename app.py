@@ -1,10 +1,9 @@
-from flask import Flask, request, render_template, url_for, session
+from flask import Flask, request, render_template, session
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 
 app = Flask(__name__)
 app.secret_key = "sweetsecret"
-app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "admin"
 app.config["MYSQL_PASSWORD"] = "admin123"
 app.config["MYSQL_DB"] = "mysql_user_auth"
