@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, session
+from instance.config import DevelopmentConfig
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 
@@ -6,6 +7,7 @@ import MySQLdb.cursors
 def create_app():
 
     app = Flask(__name__, instance_relative_config=True)
+    app.config.from_object(DevelopmentConfig)
     app.secret_key = "sweetsecret"
     app.config["MYSQL_USER"] = "admin"
     app.config["MYSQL_PASSWORD"] = "admin123"
