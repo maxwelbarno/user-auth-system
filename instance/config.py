@@ -9,6 +9,3 @@ class DevelopmentConfig(Config):
 
     DEBUG = True
     TESTING = False
-
-
-# app_config = {"development": DevelopmentConfig}
