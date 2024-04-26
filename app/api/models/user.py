@@ -14,3 +14,11 @@ class User:
         self.db.create_table()
         self.db.insert(user)
         return {"username": username, "password": password}
+
+    def login(self, username, password):
+        """Login user using login credentials"""
+        user = self.db.select_by_username(username)
+        if password in user:
+            return True
+        else:
+            return False

@@ -37,3 +37,9 @@ class Connection:
             data,
         )
         self.conn.commit()
+
+    def select_by_username(self, username):
+        """select a record from the database table based on its username"""
+        self.cursor.execute("SELECT * FROM accounts WHERE username=%s", [username])
+        record = self.cursor.fetchone()
+        return record
