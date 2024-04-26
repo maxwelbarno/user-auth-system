@@ -1,13 +1,14 @@
 from flask import Blueprint, request, jsonify
 from ..models.user import User
 
-user = Blueprint("user", __name__)
+users_blueprint = Blueprint("blueprint", __name__)
 
 
 class Registration:
     """User registration endpoint"""
 
-    @user.route("/register", methods=["POST"])
+    @users_blueprint.route("/register", methods=["POST"])
+    # Decorators are used to associate URL routes with the view functions defined within the blueprint
     def registerUser():
         data = request.get_json()
         username = data.get("username")
@@ -22,7 +23,7 @@ class Registration:
 class Login:
     """User login endpoint"""
 
-    @user.route("/login", methods=["POST"])
+    @users_blueprint.route("/login", methods=["POST"])
     def userlogin():
         data = request.get_json()
         username = data.get("username")

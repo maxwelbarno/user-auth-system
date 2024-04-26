@@ -1,7 +1,7 @@
 from flask import Flask
 from instance.config import DevelopmentConfig
 
-from .api.views.users import user
+from .api.views.users import users_blueprint
 
 
 def create_app():
@@ -13,6 +13,6 @@ def create_app():
     app.config["MYSQL_USER"] = "admin"
     app.config["MYSQL_PASSWORD"] = "admin123"
     app.config["MYSQL_DB"] = "mysql_user_auth"
-    app.register_blueprint(user, url_prefix="/api/v1/")
+    app.register_blueprint(users_blueprint, url_prefix="/api/v1/")
 
     return app
