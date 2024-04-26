@@ -12,7 +12,7 @@ class Registration:
     @users_blueprint.route("/register", methods=["POST"])
     # Decorators are used to associate URL routes with the view functions defined within the blueprint
     def registerUser():
-        
+
         key_value_errors = validate_key_value_pairs(request)
         if key_value_errors:
             return response(
