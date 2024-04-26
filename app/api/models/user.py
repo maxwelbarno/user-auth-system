@@ -1,4 +1,5 @@
 from ..db import Connection
+from passlib.hash import pbkdf2_sha256 as sha256
 
 
 class User:
@@ -9,16 +10,13 @@ class User:
 
     def create(self, username, password):
         """Save user details to users table in the database"""
+        passwordhash = sha256.hash(password)
 
-        user = [username, password]
+        user = [username, passwordhash]
         self.db.create_table()
         self.db.insert(user)
-        return {"username": username, "password": password}
 
     def login(self, username, password):
         """Login user using login credentials"""
         user = self.db.select_by_username(username)
-        if password in user:
-            return True
-        else:
-            return False
+        return sha256.verify(password, user[2])

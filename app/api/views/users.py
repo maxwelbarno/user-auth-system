@@ -15,9 +15,8 @@ class Registration:
         password = data.get("password")
 
         user = User()
-        data = {"data": user.create(username, password)}
-
-        return jsonify(data), 201
+        user.create(username, password)
+        return jsonify({"message": "user created successfully!", "status": 201}), 201
 
 
 class Login:
@@ -34,6 +33,6 @@ class Login:
         login = user.login(username, password)
 
         if login:
-            return jsonify({"message": "login success"}), 200
+            return jsonify({"message": "login successful", "status": 200}), 200
         else:
-            return jsonify({"message": "login failed"}), 401
+            return jsonify({"message": "authentication error!", "status": 401}), 401
