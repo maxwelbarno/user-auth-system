@@ -34,7 +34,7 @@ class Registration:
             return response("username {} is already registered!".format(search[1]), 400)
 
         user.create(username, password)
-        return response("user created successfully!", 201)
+        return response("user registered successfully!", 201)
 
 
 class Login:
