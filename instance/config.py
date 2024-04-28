@@ -1,3 +1,6 @@
+import os
+
+
 class Config(object):
     """Parent configuration class"""
 
@@ -9,7 +12,7 @@ class DevelopmentConfig(Config):
 
     DEBUG = True
     TESTING = False
-    MYSQL_DB = "mysql_user_auth"
+    MYSQL_DB = os.environ.get("MYSQL_DB")
 
 
 class TestingConfig(Config):
@@ -18,6 +21,3 @@ class TestingConfig(Config):
     TESTING = True
     DEBUG = True
     MYSQL_DB = "mysql_user_auth_test"
-
-
-config = {"testing": TestingConfig, "development": DevelopmentConfig}

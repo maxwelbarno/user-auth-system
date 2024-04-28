@@ -18,6 +18,7 @@ class User:
 
     def find_by_username(self, username):
         """Find user in the database table using username"""
+        self.db.create_table()
         return self.db.select_by_username(username)
 
     def login(self, username, password):

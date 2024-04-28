@@ -10,10 +10,11 @@ class Connection:
         self.password = current_app.config["MYSQL_PASSWORD"]
         self.user = current_app.config["MYSQL_USER"]
         self.db = current_app.config["MYSQL_DB"]
+        self.host = current_app.config["MYSQL_HOST"]
 
         # Create database connection
         self.conn = mysql.connector.connect(
-            user=self.user, password=self.password, database=self.db
+            user=self.user, password=self.password, database=self.db, host=self.host
         )
         # Create cursor
         self.cursor = self.conn.cursor()
