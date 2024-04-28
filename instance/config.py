@@ -1,4 +1,7 @@
 import os
+from dotenv import dotenv_values
+
+config = dotenv_values(".env")
 
 
 class Config(object):
@@ -12,7 +15,7 @@ class DevelopmentConfig(Config):
 
     DEBUG = True
     TESTING = False
-    MYSQL_DB = os.environ.get("MYSQL_DB")
+    MYSQL_DB = config["MYSQL_USER"]
 
 
 class TestingConfig(Config):
@@ -21,3 +24,5 @@ class TestingConfig(Config):
     TESTING = True
     DEBUG = True
     MYSQL_DB = "mysql_user_auth_test"
+    MYSQL_USER = config["MYSQL_USER"]
+    MYSQL_PASSWORD = config["MYSQL_PASSWORD"]
