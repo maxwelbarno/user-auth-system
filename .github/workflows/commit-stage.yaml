@@ -1,6 +1,11 @@
 name: Commit Stage
 on: push
 
+env:
+  MYSQL_USER: admin
+  MYSQL_PASSWORD: admin123
+  MYSQL_DB: mysql_user_auth
+
 jobs:
   test:
     runs-on: ubuntu-22.04
