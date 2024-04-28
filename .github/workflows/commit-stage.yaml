@@ -9,6 +9,21 @@ env:
 jobs:
   test:
     runs-on: ubuntu-22.04
+    services:
+      mysql:
+        image: mysql:8.0.36
+        env:
+          # The MySQL docker container requires these environment variables to be set
+          # so we can create and migrate the test database.
+          # See: https://hub.docker.com/_/mysql
+          MYSQL_DATABASE: mysql_user_auth_test
+          MYSQL_ROOT_PASSWORD: admin123
+        ports:
+          # Opens port 3306 on service container and host
+          # https://docs.github.com/en/actions/using-containerized-services/about-service-containers
+          - 3307:3306
+          # Before continuing, verify the mysql container is reachable from the ubuntu host
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -21,5 +36,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Test with unittest
+        env:
+          # Set the DJANGO_SECRET_KEY in the Github repo settings: Go to Secrets and variables > Actions > New repository secret
+          DATABASE_NAME: mysql_user_auth_test
+          DATABASE_USERNAME: admin
+          DATABASE_PASSWORD: admin123
+          DATABASE_ENDPOINT: 127.0.0.1
         run: |
           coverage run -m unittest discover
