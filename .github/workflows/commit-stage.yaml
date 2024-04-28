@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
-      - run: mysql -h 127.0.0.1 --port 8888 -u admin -padmin123 -e 'CREATE DATABASE IF NOT EXISTS mysql_user_auth_test;'
+      - run: mysql -h 127.0.0.1 --port 8888 -u root -proot -e 'CREATE DATABASE IF NOT EXISTS mysql_user_auth_test;'
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
