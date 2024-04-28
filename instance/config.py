@@ -24,5 +24,5 @@ class TestingConfig(Config):
     TESTING = True
     DEBUG = True
     MYSQL_DB = "mysql_user_auth_test"
-    MYSQL_USER = config["MYSQL_USER"]
-    MYSQL_PASSWORD = config["MYSQL_PASSWORD"]
+    MYSQL_USER = "admin"
+    MYSQL_PASSWORD = "admin123"
