@@ -17,16 +17,17 @@ jobs:
           # so we can create and migrate the test database.
           # See: https://hub.docker.com/_/mysql
           MYSQL_DATABASE: mysql_user_auth_test
-          MYSQL_ROOT_PASSWORD: admin123
+          MYSQL_ROOT_PASSWORD: root
         ports:
           # Opens port 3306 on service container and host
           # https://docs.github.com/en/actions/using-containerized-services/about-service-containers
-          - 3307:3306
+          - 8888:3306
           # Before continuing, verify the mysql container is reachable from the ubuntu host
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
+      - run: mysql -h 127.0.0.1 --port 8888 -u admin -padmin123 -e 'CREATE DATABASE IF NOT EXISTS mysql_user_auth_test;'
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
