@@ -15,7 +15,7 @@ class DevelopmentConfig(Config):
 
     DEBUG = True
     TESTING = False
-    MYSQL_DB = config["MYSQL_USER"]
+    MYSQL_DB = os.environ.get("MYSQL_DB")
 
 
 class TestingConfig(Config):
