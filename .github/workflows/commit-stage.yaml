@@ -27,7 +27,7 @@ jobs:
       - name: Start Mysql
         run: |
           sudo /etc/init.d/mysql start
-          mysql -h 127.0.0.1 --port 33306 -u root -proot -e 'grant all privileges on *.* to admin@localhost identified by 'admin123' with grant option;' -e 'CREATE DATABASE IF NOT EXISTS mysql_user_auth_test;'
+          mysql -h 127.0.0.1 --port 33306 -u root -proot -e 'create user admin@localhost IDENTIFIED BY "admin123";' -e 'grant all privileges on *.* to admin@localhost with grant option;' -e 'CREATE DATABASE IF NOT EXISTS mysql_user_auth_test;'
       # - name: Create database
       #   run: mysql -h 127.0.0.1 --port 33306 -u root -proot -e 'CREATE DATABASE IF NOT EXISTS mysql_user_auth_test;'
       - name: Set up Python
