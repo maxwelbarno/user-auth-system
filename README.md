@@ -1,1 +1,1 @@
-[![Build and Deploy](https://github.com/codetaskmaster/user-auth-system/actions/workflows/main.yml/badge.svg)](https://github.com/codetaskmaster/user-auth-system/actions/workflows/main.yml)
+[![Build and Deploy](https://github.com/codetaskmaster/user-auth-system/actions/workflows/main.yaml/badge.svg?branch=main)](https://github.com/codetaskmaster/user-auth-system/actions/workflows/main.yaml)
