@@ -8,7 +8,7 @@ users_blueprint = Blueprint("blueprint", __name__)
 
 @users_blueprint.route("/register", methods=["POST"])
 # Decorators are used to associate URL routes with the view functions defined within the blueprint
-def registerUser():
+def register_user():
     """User registration endpoint"""
 
     key_value_errors = validate_key_value_pairs(request)
