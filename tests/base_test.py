@@ -1,13 +1,17 @@
+import os
 from unittest import TestCase
 from app import create_app
 from instance.config import TestingConfig
 from app.api.db import Connection
+from instance.config import app_config
+
+config_name = os.environ.get("FLASK_ENV", "testing")
 
 
 class BaseTestCase(TestCase):
     def setUp(self):
-        self.app = create_app()
-        self.app.config.from_object(TestingConfig())
+        self.app = create_app(config_name)
+        self.app.config.from_object(app_config[config_name])
         self.client = self.app.test_client()
         conn = Connection()
         conn.create_table()
