@@ -14,5 +14,7 @@ RUN pip3 install mysqlclient
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
+ENV FLASK_APP=run.py
+ENV FLASK_ENV=testing
 
 CMD ["python", "run.py"]    

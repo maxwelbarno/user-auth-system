@@ -6,6 +6,7 @@ services:
     ports:
       - '5000:5000'
     environment:
+      FLASK_ENV: testing
       MYSQL_HOST: db
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin123

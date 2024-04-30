@@ -26,3 +26,6 @@ class TestingConfig(Config):
     MYSQL_DB = "mysql_user_auth_test"
     MYSQL_USER = "admin"
     MYSQL_PASSWORD = "admin123"
+
+
+app_config = {"testing": TestingConfig, "development": DevelopmentConfig}
