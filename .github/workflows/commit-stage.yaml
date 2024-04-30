@@ -22,9 +22,9 @@ jobs:
           - 33306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
-      - name: Checkout Source Code
+      - name: Checkout source code
         uses: actions/checkout@v4
-      - name: Start Mysql Server
+      - name: Start mysql server
         run: |
           sudo /etc/init.d/mysql start
           mysql -h localhost --port 33306 -u root -proot -e 'CREATE USER admin@localhost IDENTIFIED BY "admin123";' -e 'GRANT ALL PRIVILEGES ON *.* TO admin@localhost WITH GRANT OPTION;'
@@ -33,13 +33,13 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install Dependencies
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run Tests
         run: |
           coverage run -m unittest discover
-      - name: Generate Coverage Reports
+      - name: Generate coverage reports
         run: |
-          coverage run -m unittest discover
+          coverage report -m
