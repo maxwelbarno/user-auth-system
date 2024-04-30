@@ -24,8 +24,28 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
-      # - name: Create database
-      #   run: mysql -h 127.0.0.1 --port 33306 -u root -proot -e 'CREATE DATABASE IF NOT EXISTS mysql_user_auth_test;'
+      - name: Create database
+        run: mysql -h 127.0.0.1 --port 33306 -u root -proot -e 'CREATE DATABASE IF NOT EXISTS mysql_user_auth_test;'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      # - name: Test with unittest
+      #   env:
+      #     # Set the DJANGO_SECRET_KEY in the Github repo settings: Go to Secrets and variables > Actions > New repository secret
+      #     DATABASE_NAME: mysql_user_auth_test
+      #     DATABASE_USERNAME: admin
+      #     DATABASE_PASSWORD: admin123
+      #     DATABASE_ENDPOINT: 127.0.0.1
+
+      # - name: Start MySQL
+      #   run: |
+      #     sudo /etc/init.d/mysql start
+      #     mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;" -u$MYSQL_USER -p$MYSQL_PASSWORD
       # - name: Set up Python
       #   uses: actions/setup-python@v5
       #   with:
@@ -35,24 +55,5 @@ jobs:
       #     python -m pip install --upgrade pip
       #     pip install -r requirements.txt
       # - name: Test with unittest
-      #   env:
-      #     # Set the DJANGO_SECRET_KEY in the Github repo settings: Go to Secrets and variables > Actions > New repository secret
-      #     DATABASE_NAME: mysql_user_auth_test
-      #     DATABASE_USERNAME: admin
-      #     DATABASE_PASSWORD: admin123
-      #     DATABASE_ENDPOINT: 127.0.0.1
-      - name: Start MySQL
-        run: |
-          sudo /etc/init.d/mysql start
-          mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;" -u$MYSQL_USER -p$MYSQL_PASSWORD
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Test with unittest
-        run: |
-          coverage run -m unittest discover
+      #   run: |
+      #     coverage run -m unittest discover
