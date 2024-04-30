@@ -1,7 +1,4 @@
 import os
-from dotenv import dotenv_values
-
-config = dotenv_values(".env")
 
 
 class Config(object):
@@ -28,4 +25,4 @@ class TestingConfig(Config):
     MYSQL_PASSWORD = "admin123"
 
 
-app_config = {"testing": TestingConfig, "development": DevelopmentConfig}
+config = {"testing": TestingConfig, "development": DevelopmentConfig}
