@@ -22,43 +22,24 @@ jobs:
           - 33306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
-      - name: Checkout source code
+      - name: Checkout Source Code
         uses: actions/checkout@v4
-      - name: Start Mysql
+      - name: Start Mysql Server
         run: |
           sudo /etc/init.d/mysql start
-          mysql -h localhost --port 33306 -u root -proot -e 'create user admin@localhost IDENTIFIED BY "admin123";' -e 'grant all privileges on *.* to admin@localhost with grant option;'
+          mysql -h localhost --port 33306 -u root -proot -e 'CREATE USER admin@localhost IDENTIFIED BY "admin123";' -e 'GRANT ALL PRIVILEGES ON *.* TO admin@localhost WITH GRANT OPTION;'
           mysql -h localhost --port 33306 -u admin -padmin123 -e 'CREATE DATABASE IF NOT EXISTS mysql_user_auth_test;'
-      # - name: Create database
-      #   run: mysql -h 127.0.0.1 --port 33306 -u root -proot -e 'CREATE DATABASE IF NOT EXISTS mysql_user_auth_test;'
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      # - name: Test with unittest
-      #   env:
-      #     # Set the DJANGO_SECRET_KEY in the Github repo settings: Go to Secrets and variables > Actions > New repository secret
-      #     DATABASE_NAME: mysql_user_auth_test
-      #     DATABASE_USERNAME: admin
-      #     DATABASE_PASSWORD: admin123
-      #     DATABASE_ENDPOINT: 127.0.0.1
-
-      # - name: Start MySQL
-      #   run: |
-      #     sudo /etc/init.d/mysql start
-      #     mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;" -u$MYSQL_USER -p$MYSQL_PASSWORD
-      # - name: Set up Python
-      #   uses: actions/setup-python@v5
-      #   with:
-      #     python-version: '3.12'
-      # - name: Install dependencies
-      #   run: |
-      #     python -m pip install --upgrade pip
-      #     pip install -r requirements.txt
-      - name: Test with unittest
+      - name: Run Tests
+        run: |
+          coverage run -m unittest discover
+      - name: Generate Coverage Reports
         run: |
           coverage run -m unittest discover
