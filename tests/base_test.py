@@ -1,7 +1,6 @@
 import os
 from unittest import TestCase
 from app import create_app
-from instance.config import TestingConfig
 from app.api.db import Connection
 from instance.config import config
 
