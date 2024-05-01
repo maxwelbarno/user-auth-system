@@ -24,4 +24,5 @@ class User:
     def login(self, username, password):
         """Login user using login credentials"""
         user = self.find_by_username(username)
-        return sha256.verify(password, user[2])
+        if user is not None:
+            return sha256.verify(password, user[2])
