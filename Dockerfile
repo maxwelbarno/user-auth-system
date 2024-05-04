@@ -17,4 +17,4 @@ COPY . .
 ENV FLASK_APP=run.py
 ENV FLASK_ENV=testing
 
-CMD ["python", "run.py"]    
+CMD ["python", "run.py"]
