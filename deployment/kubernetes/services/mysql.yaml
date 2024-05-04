@@ -43,10 +43,12 @@ spec:
             limits:
               memory: '512Mi'
               cpu: '800m'
-              mysql-config-volume-storage: '1Gi'
+              ephemeral-storage: '1Gi'
           volumeMounts:
             - mountPath: /docker-entrypoint-initdb.d
               name: mysql-config-volume
+            - name: ephemeral
+              mountPath: '/tmp'
       volumes:
         - name: mysql-config-volume
           configMap:
