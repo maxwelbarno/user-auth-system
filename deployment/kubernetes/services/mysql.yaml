@@ -25,6 +25,7 @@ spec:
       labels:
         db: auth-mysql
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: auth-mysql
           image: mysql:8.0.36
@@ -42,6 +43,7 @@ spec:
             limits:
               memory: '512Mi'
               cpu: '800m'
+              mysql-config-volume-storage: '1Gi'
           volumeMounts:
             - mountPath: /docker-entrypoint-initdb.d
               name: mysql-config-volume

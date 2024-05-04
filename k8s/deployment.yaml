@@ -13,6 +13,7 @@ spec:
       labels:
         app: user-auth-system
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: user-auth-system
           image: user-auth-system
