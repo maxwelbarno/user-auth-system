@@ -1,7 +1,6 @@
 services:
   app:
-    build:
-      context: .
+    image: user-auth-system:latest
     container_name: app
     ports:
       - '5000:5000'
