@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+  labels:
+    db: auth-mysql
+data:
+  init.sql: |
+    CREATE DATABASE mysql_user_auth;
+    GRANT ALL PRIVILEGES ON mysql_user_auth.* TO 'admin'@'%' WITH GRANT OPTION;
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-mysql
+  labels:
+    db: auth-mysql
+spec:
+  selector:
+    matchLabels:
+      db: auth-mysql
+  template:
+    metadata:
+      labels:
+        db: auth-mysql
+    spec:
+      containers:
+        - name: auth-mysql
+          image: mysql:8.0.36
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: 'root'
+            - name: MYSQL_USER
+              value: admin
+            - name: MYSQL_PASSWORD
+              value: admin123
+            - name: MYSQL_DB
+              value: mysql_user_auth
+
+          resources:
+            limits:
+              memory: '512Mi'
+              cpu: '800m'
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d
+              name: mysql-config-volume
+      volumes:
+        - name: mysql-config-volume
+          configMap:
+            name: mysql-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-mysql
+  labels:
+    db: auth-mysql
+spec:
+  type: ClusterIP
+  selector:
+    db: auth-mysql
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306

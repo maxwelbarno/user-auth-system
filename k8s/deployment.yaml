@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-auth-system
+  labels:
+    app: user-auth-system
+spec:
+  selector:
+    matchLabels:
+      app: user-auth-system
+  template:
+    metadata:
+      labels:
+        app: user-auth-system
+    spec:
+      containers:
+        - name: user-auth-system
+          image: user-auth-system
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: '512Mi'
+              cpu: '500m'
+          ports:
+            - containerPort: 5000
+
+          env:
+            - name: FLASK_ENV
+              value: development
+            - name: MYSQL_HOST
+              value: auth-mysql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-auth-system
+  labels:
+    app: user-auth-system
+spec:
+  type: ClusterIP
+  selector:
+    app: user-auth-system
+  ports:
+    - port: 80
+      targetPort: 5000
