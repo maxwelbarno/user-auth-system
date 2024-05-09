@@ -10,6 +10,7 @@ env:
   MYSQL_PASSWORD: admin123
   MYSQL_DB: mysql_user_auth_test
   FLASK_ENV: testing
+  SECRET_KEY: sweet-secret
 
 jobs:
   test:
