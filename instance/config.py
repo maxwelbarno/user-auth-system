@@ -5,6 +5,11 @@ class Config(object):
     """Parent configuration class"""
 
     DEBUG = False
+    MYSQL_USER = os.environ.get("MYSQL_USER")
+    MYSQL_PASSWORD = os.environ.get("MYSQL_PASSWORD")
+    SECRET_KEY = os.environ.get("SECRET_KEY")
+    MYSQL_DB = os.environ.get("MYSQL_DB")
+    MYSQL_HOST = os.environ.get("MYSQL_HOST")
 
 
 class DevelopmentConfig(Config):
@@ -12,17 +17,12 @@ class DevelopmentConfig(Config):
 
     DEBUG = True
     TESTING = False
-    MYSQL_DB = os.environ.get("MYSQL_DB")
 
 
-class TestingConfig(Config):
+class TestingConfig(DevelopmentConfig):
     """Test Configurations"""
 
     TESTING = True
-    DEBUG = True
-    MYSQL_DB = "mysql_user_auth_test"
-    MYSQL_USER = "admin"
-    MYSQL_PASSWORD = "admin123"
 
 
 config = {"testing": TestingConfig, "development": DevelopmentConfig}

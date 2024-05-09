@@ -23,6 +23,22 @@ class User:
 
     def login(self, username, password):
         """Login user using login credentials"""
-        user = self.find_by_username(username)
-        if user is not None:
-            return sha256.verify(password, user[2])
+        record = self.find_by_username(username)
+        # unpacking the record tuple
+        record_id, record_username, record_password = record
+        if record and sha256.verify(password, record_password):
+            user = dict(id=int(record_id), username=record_username)
+            return user
+        else:
+            return False
+
+    def get_users(self):
+        """Fetch all users in the database table"""
+        records = self.db.select_all()
+        users = []
+        for record in records:
+            # unpacking the records list but don't unpack password field
+            record_id, record_username, _ = record
+            user = dict(id=int(record_id), username=record_username)
+            users.append(user)
+        return users

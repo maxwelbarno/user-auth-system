@@ -50,3 +50,26 @@ class UserTestCase(BaseTestCase):
         response = super().login(wrong_login_credentials)
         response_content = json.loads(response.data.decode())
         self.assertTrue(response_content["status"] == 401)
+
+    def test_get_users(self):
+        """Test user login endpoint"""
+        super().register(user)
+        login_response = super().login(user)
+        login_response_content = json.loads(login_response.data.decode())
+        token = login_response_content["data"]["token"]
+        response = super().fetch_users(token)
+        response_content = json.loads(response.data.decode())
+        self.assertTrue(response_content["status"] == 200)
+        self.assertTrue(response_content["message"] == "OK")
+        self.assertTrue(isinstance(response_content["data"], list))
+
+    def test_get_users_with_invalid_auth_token(self):
+        """Test user login endpoint"""
+        super().register(user)
+        login_response = super().login(user)
+        login_response_content = json.loads(login_response.data.decode())
+        token = login_response_content["data"]["token"]
+        response = super().fetch_users(token.lower())
+        response_content = json.loads(response.data.decode())
+        self.assertTrue(response_content["status"] == 403)
+        self.assertTrue(response_content["message"] == "Invalid authorization header")

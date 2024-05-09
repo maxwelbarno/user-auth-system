@@ -1,7 +1,9 @@
-from flask import Blueprint, request, jsonify
+import jwt
+from flask import Blueprint, request, current_app
 from ..models.user import User
 from utils.validations import check_for_blanks, validate_key_value_pairs
-from utils.responses import response
+from utils.responses import response, response_with_data
+from utils.decorators import jwt_required
 
 users_blueprint = Blueprint("blueprint", __name__)
 
@@ -35,18 +37,35 @@ def register_user():
 
 
 @users_blueprint.route("/login", methods=["POST"])
-def userlogin():
+def user_login():
     """User login endpoint"""
     data = request.get_json()
     username = data.get("username")
     password = data.get("password")
 
-    user = User()
+    login = User().login(username, password)
 
-    login = user.login(username, password)
+    if login:
+        login.update(
+            {
+                "token": jwt.encode(
+                    {"user_id": login["username"]},
+                    current_app.config["SECRET_KEY"],
+                    algorithm="HS256",
+                )
+            }
+        )
 
     return (
-        response("login successful", 200)
+        response_with_data("login successful", login, 200)
         if login
         else response("authentication error!", 401)
     )
+
+
+@users_blueprint.route("/users", methods=["GET"])
+@jwt_required
+def fetch_users():
+    """Access a protected endpoint"""
+    users = User().get_users()
+    return response_with_data("OK", users, 200)

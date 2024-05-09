@@ -27,6 +27,13 @@ class BaseTestCase(TestCase):
             "api/v1/login", data=data, content_type="application/json"
         )
 
+    def fetch_users(self, token):
+        """login user method"""
+        return self.client.get(
+            "api/v1/users",
+            headers={"Authorization": "Bearer {}".format(token)},
+        )
+
     def tearDown(self):
         with self.app.app_context():
             conn = Connection()

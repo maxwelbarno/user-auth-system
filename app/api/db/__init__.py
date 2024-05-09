@@ -45,3 +45,9 @@ class Connection:
         self.cursor.execute("SELECT * FROM accounts WHERE username=%s", [username])
         record = self.cursor.fetchone()
         return record
+
+    def select_all(self):
+        """select a record from the database table based on its username"""
+        self.cursor.execute("SELECT * FROM accounts")
+        records = self.cursor.fetchall()
+        return records
