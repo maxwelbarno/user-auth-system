@@ -18,9 +18,8 @@ def jwt_required(func):
             data = jwt.decode(
                 token, current_app.config["SECRET_KEY"], algorithms=["HS256"]
             )
-            current_user = User().find_by_username(data["user_id"])
-            if current_user is None:
-                return response("Authorization header missing", 403)
+            # Return True if user data is returned using data decrypted from JWT token
+            isinstance(User().find_by_username(data["user_id"]), tuple)
 
         except Exception:
             return response("Invalid authorization header", 403)

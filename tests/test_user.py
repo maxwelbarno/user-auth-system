@@ -52,7 +52,7 @@ class UserTestCase(BaseTestCase):
         self.assertTrue(response_content["status"] == 401)
 
     def test_get_users(self):
-        """Test user login endpoint"""
+        """Test accessing JWT protected endpoint with valid token"""
         super().register(user)
         login_response = super().login(user)
         login_response_content = json.loads(login_response.data.decode())
@@ -64,7 +64,7 @@ class UserTestCase(BaseTestCase):
         self.assertTrue(isinstance(response_content["data"], list))
 
     def test_get_users_with_invalid_auth_token(self):
-        """Test user login endpoint"""
+        """Test accessing JWT protected endpoint with invalid token"""
         super().register(user)
         login_response = super().login(user)
         login_response_content = json.loads(login_response.data.decode())
@@ -73,3 +73,10 @@ class UserTestCase(BaseTestCase):
         response_content = json.loads(response.data.decode())
         self.assertTrue(response_content["status"] == 403)
         self.assertTrue(response_content["message"] == "Invalid authorization header")
+
+    def test_get_users_without_jwt(self):
+        """Test accessing a protected endpoint without JWT"""
+        response = super().fetch_users_without_jwt()
+        response_content = json.loads(response.data.decode())
+        self.assertTrue(response_content["status"] == 403)
+        self.assertTrue(response_content["message"] == "Authorization header missing")

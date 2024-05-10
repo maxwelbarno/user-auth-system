@@ -34,6 +34,10 @@ class BaseTestCase(TestCase):
             headers={"Authorization": "Bearer {}".format(token)},
         )
 
+    def fetch_users_without_jwt(self):
+        """login user method"""
+        return self.client.get("api/v1/users")
+
     def tearDown(self):
         with self.app.app_context():
             conn = Connection()
