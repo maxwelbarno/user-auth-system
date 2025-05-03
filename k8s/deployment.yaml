@@ -16,12 +16,15 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: user-auth-system
-          image: user-auth-system
+          image: ywalakamar/user-auth-system:latest
           imagePullPolicy: IfNotPresent
           resources:
             limits:
-              memory: '512Mi'
-              cpu: '500m'
+              memory: 512Mi
+              cpu: '1'
+            requests:
+              cpu: '1'
+              memory: 512Mi
           ports:
             - containerPort: 5000
 
@@ -38,9 +41,11 @@ metadata:
   labels:
     app: user-auth-system
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: user-auth-system
   ports:
-    - port: 80
+    - port: 8080
       targetPort: 5000
+      nodePort: 30000
+      protocol: TCP

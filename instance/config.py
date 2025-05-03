@@ -12,6 +12,13 @@ class Config(object):
     MYSQL_HOST = os.environ.get("MYSQL_HOST")
 
 
+class ProductionConfig(Config):
+    """Production Configurations"""
+
+    DEBUG = False
+    TESTING = False
+
+
 class DevelopmentConfig(Config):
     """Development Configurations"""
 
@@ -25,4 +32,8 @@ class TestingConfig(DevelopmentConfig):
     TESTING = True
 
 
-config = {"testing": TestingConfig, "development": DevelopmentConfig}
+config = {
+    "development": DevelopmentConfig,
+    "testing": TestingConfig,
+    "production": ProductionConfig,
+}

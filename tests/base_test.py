@@ -4,7 +4,8 @@ from app import create_app
 from app.api.db import Connection
 from instance.config import config
 
-config_name = os.environ.get("FLASK_ENV", "testing")
+os.environ["FLASK_ENV"] = "testing"
+config_name = os.environ.get("FLASK_ENV")
 
 
 class BaseTestCase(TestCase):
@@ -17,15 +18,11 @@ class BaseTestCase(TestCase):
 
     def register(self, data):
         """register user method"""
-        return self.client.post(
-            "api/v1/register", data=data, content_type="application/json"
-        )
+        return self.client.post("api/v1/register", data=data, content_type="application/json")
 
     def login(self, data):
         """login user method"""
-        return self.client.post(
-            "api/v1/login", data=data, content_type="application/json"
-        )
+        return self.client.post("api/v1/login", data=data, content_type="application/json")
 
     def fetch_users(self, token):
         """login user method"""

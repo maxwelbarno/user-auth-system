@@ -9,14 +9,14 @@ services:
       MYSQL_HOST: db
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin123
-      MYSQL_DB: mysql_user_auth
+      MYSQL_DB: user_auth
     depends_on:
       - db
     links:
       - db:db
 
   db:
-    image: mysql:8.0.36
+    image: mysql:8.4.5
     container_name: db
     cap_add:
       - SYS_NICE
@@ -25,6 +25,6 @@ services:
       - 3307:3306
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: mysql_user_auth
+      MYSQL_DATABASE: user_auth
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin123

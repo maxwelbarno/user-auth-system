@@ -8,7 +8,7 @@ on:
 env:
   MYSQL_USER: admin
   MYSQL_PASSWORD: admin123
-  MYSQL_DB: mysql_user_auth_test
+  MYSQL_DB: user_auth_test
   FLASK_ENV: testing
   SECRET_KEY: sweet-secret
 
@@ -17,9 +17,9 @@ jobs:
     runs-on: ubuntu-22.04
     services:
       mysql:
-        image: mysql:8.0.36
+        image: mysql:8.4.5
         env:
-          MYSQL_DATABASE: mysql_user_auth_test
+          MYSQL_DATABASE: user_auth_test
           MYSQL_ROOT_PASSWORD: root
           MYSQL_USER: admin
           MYSQL_PASSWORD: admin123
@@ -38,7 +38,7 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.13'
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
