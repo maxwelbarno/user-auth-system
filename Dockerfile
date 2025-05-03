@@ -4,7 +4,7 @@ COPY . .
 # install required packages for system
 RUN apt update \
     && apt upgrade -y \
-    && apt install -y gcc default-libmysqlclient-dev pkg-config \
+    && apt --no-install-recommends install -y gcc default-libmysqlclient-dev pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
