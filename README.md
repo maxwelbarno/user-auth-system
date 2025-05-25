@@ -18,57 +18,57 @@ To run the project locally
 
 1. Create `.env` file in the root directory and assign the following environment variables
 
-```
-FLASK_DEBUG=1
-FLASK_ENV=
-MYSQL_PASSWORD=
-MYSQL_USER=
-MYSQL_DB=
-MYSQL_HOST=
-SECRET_KEY=
-```
+   ```
+   FLASK_DEBUG=1
+   FLASK_ENV=
+   MYSQL_PASSWORD=
+   MYSQL_USER=
+   MYSQL_DB=
+   MYSQL_HOST=
+   SECRET_KEY=
+   ```
 
 #### a. Using inbuilt Werkzeug Server
 
 2.  From the terminal in the project root directory, run the following command
 
-`flask --app run.py  run`
+    `flask --app run.py  run`
 
 #### b. Using Gunicorn Server
 
 3. Create gunicorn configuration file `gunicorn.conf.py` in the root directory and add the following environment variables
 
-```
-import os
+   ```
+   import os
 
-os.environ["FLASK_ENV"] =
-os.environ["MYSQL_USER"] =
-os.environ["MYSQL_PASSWORD"] =
-os.environ["MYSQL_DB"] =
-os.environ["SECRET_KEY"] =
+   os.environ["FLASK_ENV"] =
+   os.environ["MYSQL_USER"] =
+   os.environ["MYSQL_PASSWORD"] =
+   os.environ["MYSQL_DB"] =
+   os.environ["SECRET_KEY"] =
 
-bind = "0.0.0.0:5000"
-wsgi_app = "run:app"
-```
+   bind = "0.0.0.0:5000"
+   wsgi_app = "run:app"
+   ```
 
 4. From the terminal in the project root directory, run the following command
 
-`gunicorn --config gunicorn.conf.py`
+   `gunicorn --config gunicorn.conf.py`
 
 ### Dockerize application
 
 1. Open terminal in the root directory
 2. Create `production.env` file in the root directory and assign the following environment variables
 
-```
-FLASK_DEBUG=1
-FLASK_ENV=
-MYSQL_PASSWORD=
-MYSQL_USER=
-MYSQL_DB=
-MYSQL_HOST=
-SECRET_KEY=
-```
+   ```
+   FLASK_DEBUG=1
+   FLASK_ENV=
+   MYSQL_PASSWORD=
+   MYSQL_USER=
+   MYSQL_DB=
+   MYSQL_HOST=
+   SECRET_KEY=
+   ```
 
 3. Setup docker
 
