@@ -28,7 +28,15 @@ MYSQL_HOST=
 SECRET_KEY=
 ```
 
-2. Create gunicorn configuration file `gunicorn.conf.py` in the root directory and add the following variables
+#### Using inbuilt Werkzeug Server
+
+a. From the terminal in the project root directory, run the following command
+
+`flask --app run.py  run`
+
+#### Using Gunicorn Server
+
+2. Create gunicorn configuration file `gunicorn.conf.py` in the root directory and add the following environment variables
 
 ```
 import os
@@ -43,7 +51,7 @@ bind = "0.0.0.0:5000"
 wsgi_app = "run:app"
 ```
 
-3. Run application command from terminal
+b. From the terminal in the project root directory, run the following command
 
 `gunicorn --config gunicorn.conf.py`
 
