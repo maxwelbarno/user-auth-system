@@ -19,18 +19,17 @@ class User:
     def find_by_username(self, username):
         """Find user in the database table using username"""
         self.db.create_table()
-        # print(type(self.db.select_by_username(username)))
-        # print(self.db.select_by_username(username))
         return self.db.select_by_username(username)
 
     def login(self, username, password):
         """Login user using login credentials"""
         record = self.find_by_username(username)
-        # unpacking the record tuple
-        record_id, record_username, record_password = record
-        if record and sha256.verify(password, record_password):
-            user = dict(id=int(record_id), username=record_username)
-            return user
+        if record:
+            # unpacking the record tuple
+            record_id, record_username, record_password = record
+            if sha256.verify(password, record_password):
+                user = dict(id=int(record_id), username=record_username)
+                return user
         else:
             return False
 
