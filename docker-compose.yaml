@@ -4,12 +4,9 @@ services:
     container_name: app
     ports:
       - '5000:5000'
-    environment:
-      FLASK_ENV: development
-      MYSQL_HOST: db
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin123
-      MYSQL_DB: user_auth
+    env_file:
+      - production.env
+
     depends_on:
       - db
     links:
